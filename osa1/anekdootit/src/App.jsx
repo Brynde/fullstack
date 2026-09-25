@@ -1,6 +1,12 @@
 import { useState } from 'react'
 
-function getRandomInt() {
+const Button = (props) => (
+  <button onClick={props.onClick}>
+    {props.text}
+  </button>
+)
+
+const getRandomInt = () => {
   return Math.floor(Math.random() * 8);
 }
 
@@ -15,12 +21,22 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
-  const [selected, setSelected] = useState(getRandomInt())
+  const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+
+  const addVote = () => {
+    const copy = [...votes]
+    copy[selected] += 1
+    return copy
+}
+
 
   return (
     <div>
-      {anecdotes[selected]}
+      <p>{anecdotes[selected]}</p>
+      <p>{votes[selected]} votes</p>
+      <Button onClick={() => setSelected(getRandomInt())} text="next anecdote" />
+      <Button onClick={() => setVotes(addVote())} text="vote" />
     </div>
   )
 }
