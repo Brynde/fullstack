@@ -10,13 +10,20 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
+
+    const lowercaseName = newName.toLowerCase()
+
+    if (persons.some(person => person.name.toLowerCase() === lowercaseName)) {
+      alert(`${newName} is already added to the phonebook`)
+      return
+    }
+
     const contactObject = {
       name: newName,
-      id: newName,
     }
 
     setPersons(persons.concat(contactObject))
-    setNewName
+    setNewName('')
   }
 
   const handleNameChange = (event) => {
@@ -36,7 +43,6 @@ const App = () => {
         <div>
           <button type="submit">add</button>
         </div>
-        <div>debug: {newName}</div>
       </form>
       <h2>Numbers</h2>
       <div>
